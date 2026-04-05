@@ -10,7 +10,7 @@ import { CheckCircle, Clock, Calendar, User, Phone, Mail, Hash } from 'lucide-re
 
 export default function BookingConfirmation() {
   const { id } = useParams();
-  const [booking, setBooking] = useState(null);
+  const [booking, setBooking] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
