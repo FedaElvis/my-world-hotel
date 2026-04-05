@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #C5A059;
+  --secondary: #1A1A1A;
+  --accent: #FDFBF7;
+  --glass: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  background-color: var(--accent);
+  color: var(--secondary);
+  font-family: 'Inter', sans-serif;
+}
+
+.glass-morphism {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #C5A059 0%, #E2C27F 100%);
+}
+
+.dark-gradient {
+  background: linear-gradient(135deg, #1A1A1A 0%, #333333 100%);
+}
+
+@layer components {
+  .btn-primary {
+    background: linear-gradient(135deg, #C5A059 0%, #E2C27F 100%);
+    @apply text-white px-6 py-3 rounded-full font-semibold transition-all hover:scale-[1.05] active:scale-95 shadow-lg;
+  }
+  .btn-secondary {
+    @apply border-2 border-[#C5A059] text-[#C5A059] px-6 py-3 rounded-full font-semibold transition-all hover:bg-[#C5A059] hover:text-white active:scale-95;
+  }
+}
