@@ -104,7 +104,7 @@ export default function ManageRooms() {
     <main className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <Toaster />
       <AdminSidebar />
-      <div className="flex-1 w-full md:ml-64 p-4 sm:p-6 md:p-12 overflow-x-hidden">
+      <div className="flex-1 min-w-0 md:ml-64 p-4 sm:p-6 md:p-12">
         <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 md:mb-12 gap-4">
           <header>
             <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Manage <span className="text-[#C5A059]">Rooms</span></h1>

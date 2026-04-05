@@ -1,11 +1,13 @@
 "use client";
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Bed, BookOpen, LogOut, ChevronLeft } from 'lucide-react';
+import { LayoutDashboard, Bed, BookOpen, LogOut, ChevronLeft, Menu, X } from 'lucide-react';
+import { useState } from 'react';
 
 const AdminSidebar = () => {
     const pathname = usePathname();
     const router = useRouter();
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleLogout = () => {
         localStorage.removeItem('adminToken');
@@ -19,57 +21,73 @@ const AdminSidebar = () => {
     ];
 
     return (
-        <aside className="w-full md:w-64 h-auto md:h-screen bg-[#1A1A1A] text-white static md:fixed left-0 top-0 p-4 md:py-10 md:px-6 flex flex-col md:justify-between shadow-xl z-50">
-            <div>
-                <div className="flex items-center justify-between md:mb-12 mb-4">
-                   <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 md:w-10 md:h-10 gold-gradient rounded-xl"></div>
-                       <h2 className="text-lg md:text-xl font-bold tracking-tighter uppercase whitespace-nowrap">My World <span className="text-[#C5A059]">Admin</span></h2>
-                   </div>
-                   
-                   <div className="md:hidden flex space-x-2">
-                       <Link href="/" className="p-2 text-gray-400 bg-white/5 rounded-lg">
-                           <ChevronLeft size={18} />
-                       </Link>
-                       <button onClick={handleLogout} className="p-2 text-red-400 bg-red-500/10 rounded-lg">
-                           <LogOut size={18} />
-                       </button>
-                   </div>
+        <>
+            {/* Mobile Header */}
+            <div className="md:hidden bg-[#1A1A1A] text-white p-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
+                <div className="flex items-center gap-3">
+                   <div className="w-8 h-8 gold-gradient rounded-xl"></div>
+                   <h2 className="text-lg font-bold tracking-tighter uppercase">Admin</h2>
+                </div>
+                <button onClick={() => setIsOpen(true)} className="p-2 text-white bg-white/10 rounded-lg">
+                    <Menu size={20} />
+                </button>
+            </div>
+
+            {/* Mobile Overlay */}
+            {isOpen && (
+                <div 
+                    className="md:hidden fixed inset-0 bg-black/50 z-40"
+                    onClick={() => setIsOpen(false)}
+                />
+            )}
+
+            {/* Sidebar */}
+            <aside className={`fixed top-0 left-0 h-screen w-64 bg-[#1A1A1A] text-white py-10 px-6 flex flex-col justify-between shadow-2xl z-50 transform transition-transform duration-300 md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <button onClick={() => setIsOpen(false)} className="md:hidden absolute top-4 right-4 p-2 text-white bg-white/10 rounded-lg">
+                    <X size={20} />
+                </button>
+
+                <div>
+                    <div className="flex items-center gap-3 mb-12">
+                       <div className="w-10 h-10 gold-gradient rounded-xl"></div>
+                       <h2 className="text-xl font-bold tracking-tighter uppercase">My World <span className="text-[#C5A059]">Admin</span></h2>
+                    </div>
+
+                    <nav className="space-y-4">
+                        {links.map((link) => {
+                            const Icon = link.icon;
+                            const isActive = pathname === link.href;
+                            return (
+                                <Link 
+                                    key={link.href} 
+                                    href={link.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
+                                        isActive ? 'gold-gradient text-white shadow-xl' : 'text-gray-400 hover:text-white hover:bg-white/10'
+                                    }`}
+                                >
+                                    <Icon size={20} />
+                                    <span className="font-semibold">{link.name}</span>
+                                </Link>
+                            );
+                        })}
+                    </nav>
                 </div>
 
-                <nav className="flex flex-row md:flex-col gap-2 md:space-y-4 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
-                    {links.map((link) => {
-                        const Icon = link.icon;
-                        const isActive = pathname === link.href;
-                        return (
-                            <Link 
-                                key={link.href} 
-                                href={link.href}
-                                className={`flex items-center gap-2 whitespace-nowrap px-4 py-2.5 md:py-3 rounded-xl md:rounded-2xl transition-all ${
-                                    isActive ? 'gold-gradient text-white shadow-xl' : 'text-gray-400 hover:text-white hover:bg-white/10'
-                                }`}
-                            >
-                                <Icon size={18} className="md:w-5 md:h-5" />
-                                <span className="font-semibold text-sm md:text-base">{link.name}</span>
-                            </Link>
-                        );
-                    })}
-                </nav>
-            </div>
-
-            <div className="hidden md:flex flex-col space-y-4">
-                <button 
-                   onClick={handleLogout}
-                   className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-400 hover:bg-red-500/10 transition-all font-semibold"
-                >
-                    <LogOut size={20} />
-                    <span>Logout</span>
-                </button>
-                <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-500 text-sm hover:text-gray-300">
-                    <ChevronLeft size={16} /> Back to Website
-                </Link>
-            </div>
-        </aside>
+                <div className="space-y-4">
+                    <button 
+                       onClick={handleLogout}
+                       className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-400 hover:bg-red-500/10 transition-all font-semibold"
+                    >
+                        <LogOut size={20} />
+                        <span>Logout</span>
+                    </button>
+                    <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-500 text-sm hover:text-gray-300">
+                        <ChevronLeft size={16} /> Back to Website
+                    </Link>
+                </div>
+            </aside>
+        </>
     );
 };
 

@@ -45,8 +45,6 @@ export default function AdminDashboard() {
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-
   const statCards = [
     { label: 'Total Rooms', value: stats.totalRooms, icon: Bed, color: 'text-blue-500' },
     { label: 'Available Rooms', value: stats.availableRooms, icon: Users, color: 'text-green-500' },
@@ -57,34 +55,40 @@ export default function AdminDashboard() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <AdminSidebar />
-      <div className="flex-1 w-full md:ml-64 p-4 sm:p-6 md:p-12 overflow-x-hidden">
+      <div className="flex-1 min-w-0 md:ml-64 p-4 sm:p-6 md:p-12">
         <header className="mb-12">
           <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Dashboard <span className="text-[#C5A059]">Overview</span></h1>
           <p className="text-gray-500">Real-time statistics of My World Hotel</p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {statCards.map((stat, i) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 group"
-              >
-                <div className="flex justify-between items-start mb-6">
-                  <div className={`p-4 rounded-2xl bg-gray-50 transition-colors group-hover:bg-[#C5A059]/10 ${stat.color}`}>
-                     <Icon size={24} />
+        {loading ? (
+           <div className="flex justify-center items-center py-20">
+             <div className="w-12 h-12 border-4 border-t-[#C5A059] border-gray-200 rounded-full animate-spin"></div>
+           </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {statCards.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 group"
+                >
+                  <div className="flex justify-between items-start mb-6">
+                    <div className={`p-4 rounded-2xl bg-gray-50 transition-colors group-hover:bg-[#C5A059]/10 ${stat.color}`}>
+                       <Icon size={24} />
+                    </div>
                   </div>
-                </div>
-                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">{stat.label}</p>
-                <p className="text-4xl font-black tracking-tighter">{stat.value}</p>
-              </motion.div>
-            );
-          })}
-        </div>
+                  <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">{stat.label}</p>
+                  <p className="text-4xl font-black tracking-tighter">{stat.value}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </main>
   );
