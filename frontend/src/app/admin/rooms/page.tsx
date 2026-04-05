@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Plus, Trash2, Edit2, CheckCircle, XCircle } from 'lucide-react';
 
 export default function ManageRooms() {
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   

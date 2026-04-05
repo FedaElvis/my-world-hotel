@@ -6,7 +6,7 @@ import AdminSidebar from '@/components/AdminSidebar';
 import { motion } from 'framer-motion';
 
 export default function ViewBookings() {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchBookings = async () => {

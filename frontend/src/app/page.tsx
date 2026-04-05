@@ -11,10 +11,10 @@ import { motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
-  const [rooms, setRooms] = useState([]);
-  const [filteredRooms, setFilteredRooms] = useState([]);
+  const [rooms, setRooms] = useState<any[]>([]);
+  const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   // Filters
@@ -49,7 +49,7 @@ export default function Home() {
     setFilteredRooms(result);
   }, [typeFilter, priceSort, rooms]);
 
-  const handleBookNow = (room) => {
+  const handleBookNow = (room: any) => {
     setSelectedRoom(room);
     setIsModalOpen(true);
   };
