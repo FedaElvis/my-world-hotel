@@ -28,16 +28,17 @@ export default function ViewBookings() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-50 flex">
+    <main className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <Toaster />
       <AdminSidebar />
-      <div className="flex-1 ml-64 p-12 overflow-y-auto w-full">
-        <header className="mb-12">
+      <div className="flex-1 w-full md:ml-64 p-4 sm:p-6 md:p-12 overflow-x-hidden">
+        <header className="mb-8 md:mb-12">
           <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">View <span className="text-[#C5A059]">Bookings</span></h1>
           <p className="text-gray-500">Monitor and manage all hotel reservations</p>
         </header>
 
         <motion.div 
+
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100"

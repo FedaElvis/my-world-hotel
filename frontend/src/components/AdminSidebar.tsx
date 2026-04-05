@@ -19,14 +19,25 @@ const AdminSidebar = () => {
     ];
 
     return (
-        <aside className="w-64 h-screen bg-[#1A1A1A] text-white fixed left-0 top-0 py-10 px-6 flex flex-col justify-between shadow-2xl">
+        <aside className="w-full md:w-64 h-auto md:h-screen bg-[#1A1A1A] text-white static md:fixed left-0 top-0 p-4 md:py-10 md:px-6 flex flex-col md:justify-between shadow-xl z-50">
             <div>
-                <div className="flex items-center gap-3 mb-12">
-                   <div className="w-10 h-10 gold-gradient rounded-xl"></div>
-                   <h2 className="text-xl font-bold tracking-tighter uppercase">My World <span className="text-[#C5A059]">Admin</span></h2>
+                <div className="flex items-center justify-between md:mb-12 mb-4">
+                   <div className="flex items-center gap-3">
+                       <div className="w-8 h-8 md:w-10 md:h-10 gold-gradient rounded-xl"></div>
+                       <h2 className="text-lg md:text-xl font-bold tracking-tighter uppercase whitespace-nowrap">My World <span className="text-[#C5A059]">Admin</span></h2>
+                   </div>
+                   
+                   <div className="md:hidden flex space-x-2">
+                       <Link href="/" className="p-2 text-gray-400 bg-white/5 rounded-lg">
+                           <ChevronLeft size={18} />
+                       </Link>
+                       <button onClick={handleLogout} className="p-2 text-red-400 bg-red-500/10 rounded-lg">
+                           <LogOut size={18} />
+                       </button>
+                   </div>
                 </div>
 
-                <nav className="space-y-4">
+                <nav className="flex flex-row md:flex-col gap-2 md:space-y-4 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
                     {links.map((link) => {
                         const Icon = link.icon;
                         const isActive = pathname === link.href;
@@ -34,19 +45,19 @@ const AdminSidebar = () => {
                             <Link 
                                 key={link.href} 
                                 href={link.href}
-                                className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
+                                className={`flex items-center gap-2 whitespace-nowrap px-4 py-2.5 md:py-3 rounded-xl md:rounded-2xl transition-all ${
                                     isActive ? 'gold-gradient text-white shadow-xl' : 'text-gray-400 hover:text-white hover:bg-white/10'
                                 }`}
                             >
-                                <Icon size={20} />
-                                <span className="font-semibold">{link.name}</span>
+                                <Icon size={18} className="md:w-5 md:h-5" />
+                                <span className="font-semibold text-sm md:text-base">{link.name}</span>
                             </Link>
                         );
                     })}
                 </nav>
             </div>
 
-            <div className="space-y-4">
+            <div className="hidden md:flex flex-col space-y-4">
                 <button 
                    onClick={handleLogout}
                    className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-400 hover:bg-red-500/10 transition-all font-semibold"

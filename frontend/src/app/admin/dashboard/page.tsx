@@ -55,9 +55,9 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <main className="min-h-screen bg-gray-50 flex">
+    <main className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <AdminSidebar />
-      <div className="flex-1 ml-64 p-12">
+      <div className="flex-1 w-full md:ml-64 p-4 sm:p-6 md:p-12 overflow-x-hidden">
         <header className="mb-12">
           <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Dashboard <span className="text-[#C5A059]">Overview</span></h1>
           <p className="text-gray-500">Real-time statistics of My World Hotel</p>

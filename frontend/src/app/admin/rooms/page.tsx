@@ -101,18 +101,18 @@ export default function ManageRooms() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 flex">
+    <main className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       <Toaster />
       <AdminSidebar />
-      <div className="flex-1 ml-64 p-12 overflow-y-auto">
-        <div className="flex justify-between items-end mb-12">
+      <div className="flex-1 w-full md:ml-64 p-4 sm:p-6 md:p-12 overflow-x-hidden">
+        <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 md:mb-12 gap-4">
           <header>
             <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Manage <span className="text-[#C5A059]">Rooms</span></h1>
             <p className="text-gray-500">Add, update, or remove rooms from the inventory</p>
           </header>
           <button 
             onClick={() => setIsAdding(!isAdding)}
-            className="bg-[#C5A059] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#A6864A] transition-colors"
+            className="bg-[#C5A059] text-white px-6 py-3 rounded-xl font-bold flex justify-center items-center w-full md:w-auto gap-2 hover:bg-[#A6864A] transition-colors"
           >
             {isAdding ? 'Cancel' : <><Plus size={20} /> Add New Room</>}
           </button>
@@ -162,9 +162,10 @@ export default function ManageRooms() {
           </motion.div>
         )}
 
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-          <table className="w-full text-left">
-            <thead className="bg-gray-50 text-gray-500">
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left min-w-[800px]">
+              <thead className="bg-gray-50 text-gray-500">
               <tr>
                 <th className="px-6 py-4 font-bold uppercase tracking-widest text-xs">Room</th>
                 <th className="px-6 py-4 font-bold uppercase tracking-widest text-xs">Type</th>
@@ -201,6 +202,7 @@ export default function ManageRooms() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </main>
