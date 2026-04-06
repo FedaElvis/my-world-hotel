@@ -18,17 +18,24 @@ const roomRoutes = require('./routes/roomRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const path = require('path');
 const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-// Configure multer storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads/');
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Configure Cloudinary multer storage (files go directly to Cloudinary, never saved locally)
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'myworld-hotel',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
   },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
 });
 const upload = multer({ storage });
 
@@ -36,15 +43,10 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/auth', authRoutes);
 
-// Static mapping
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
-
-// Upload Endpoint
+// Upload Endpoint - now returns permanent Cloudinary URLs
 app.post('/api/upload', upload.array('images', 10), (req, res) => {
   try {
-    const fileUrls = req.files.map(file => {
-      return `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
-    });
+    const fileUrls = req.files.map(file => file.path);
     res.status(200).json({ urls: fileUrls });
   } catch (error) {
     res.status(500).json({ message: 'Error uploading files' });
